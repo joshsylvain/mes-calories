@@ -8,6 +8,18 @@
 <meta name="apple-mobile-web-app-title" content="NOCTA">
 <meta name="theme-color" content="#000000">
 <title>NOCTA · Macros</title>
+
+<!-- Icône app pour iPhone (écran d'accueil) -->
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' fill='%23000000'/><path d='M 100 40 A 50 50 0 1 0 100 140 A 38 38 0 1 1 100 40 Z' fill='%23ffffff'/></svg>">
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' fill='%23000000'/><path d='M 100 40 A 50 50 0 1 0 100 140 A 38 38 0 1 1 100 40 Z' fill='%23ffffff'/></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000000'/><path d='M 55 22 A 28 28 0 1 0 55 78 A 21 21 0 1 1 55 22 Z' fill='%23ffffff'/></svg>">
+
+<!-- ===== Icônes d'app (intégrées en data URI, aucun fichier externe nécessaire) ===== -->
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' fill='%23000000'/><path d='M 105 45 A 45 45 0 1 0 105 135 A 33 33 0 1 1 105 45 Z' fill='%23ffffff'/><text x='90' y='165' font-family='Arial Black, sans-serif' font-size='16' font-weight='900' fill='%23ffffff' text-anchor='middle' letter-spacing='3'>NOCTA</text></svg>">
+<link rel="apple-touch-icon" sizes="167x167" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' fill='%23000000'/><path d='M 105 45 A 45 45 0 1 0 105 135 A 33 33 0 1 1 105 45 Z' fill='%23ffffff'/><text x='90' y='165' font-family='Arial Black, sans-serif' font-size='16' font-weight='900' fill='%23ffffff' text-anchor='middle' letter-spacing='3'>NOCTA</text></svg>">
+<link rel="apple-touch-icon" sizes="152x152" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' fill='%23000000'/><path d='M 105 45 A 45 45 0 1 0 105 135 A 33 33 0 1 1 105 45 Z' fill='%23ffffff'/><text x='90' y='165' font-family='Arial Black, sans-serif' font-size='16' font-weight='900' fill='%23ffffff' text-anchor='middle' letter-spacing='3'>NOCTA</text></svg>">
+<link rel="apple-touch-icon" sizes="120x120" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' fill='%23000000'/><path d='M 105 45 A 45 45 0 1 0 105 135 A 33 33 0 1 1 105 45 Z' fill='%23ffffff'/><text x='90' y='165' font-family='Arial Black, sans-serif' font-size='16' font-weight='900' fill='%23ffffff' text-anchor='middle' letter-spacing='3'>NOCTA</text></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' fill='%23000000'/><path d='M 105 45 A 45 45 0 1 0 105 135 A 33 33 0 1 1 105 45 Z' fill='%23ffffff'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Narrow:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -43,7 +55,7 @@
     -webkit-font-smoothing: antialiased;
   }
   body {
-    padding: env(safe-area-inset-top) 0 calc(90px + env(safe-area-inset-bottom)) 0;
+    padding: env(safe-area-inset-top) 0 calc(72px + env(safe-area-inset-bottom)) 0;
     max-width: 520px;
     margin: 0 auto;
     position: relative;
@@ -399,7 +411,7 @@
   /* ===== FAB (bouton ajouter) ===== */
   .fab-group {
     position: fixed;
-    bottom: calc(20px + env(safe-area-inset-bottom));
+    bottom: calc(84px + env(safe-area-inset-bottom));
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -927,6 +939,355 @@
     border-radius: var(--r-pill);
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ===== Bottom Navigation ===== */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--line-2);
+    z-index: 90;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .bottom-nav-inner {
+    max-width: 520px;
+    margin: 0 auto;
+    display: flex;
+  }
+  .nav-item {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 12px 8px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    color: var(--ink-3);
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-item.active { color: var(--ink); }
+  .nav-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px; height: 2px;
+    background: var(--ink);
+    border-radius: 0 0 var(--r-sm) var(--r-sm);
+  }
+  .nav-emoji {
+    font-size: 22px;
+    line-height: 1;
+    filter: grayscale(1) brightness(1.2) contrast(1.3);
+    opacity: 0.5;
+    transition: all 0.2s;
+  }
+  .nav-item.active .nav-emoji {
+    filter: grayscale(0) brightness(1);
+    opacity: 1;
+  }
+  .nav-label {
+    font-family: 'Archivo', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  /* ===== Sport view ===== */
+  .view-sport { display: none; }
+  .view-sport.active { display: block; }
+
+  .sport-header {
+    padding: 24px 20px 16px;
+  }
+  .sport-header .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+  .sport-title {
+    font-family: 'Archivo', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .sport-week {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .sport-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* Selecteur de jour */
+  .week-strip {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    padding: 0 20px;
+    margin-bottom: 24px;
+  }
+  .day-chip {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    padding: 10px 2px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .day-chip.active {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .day-chip.today::after {
+    content: '';
+    position: absolute;
+    top: 5px; right: 5px;
+    width: 5px; height: 5px;
+    background: var(--good);
+    border-radius: 50%;
+  }
+  .day-chip.rest {
+    opacity: 0.5;
+  }
+  .day-chip-day {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-3);
+    margin-bottom: 4px;
+  }
+  .day-chip.active .day-chip-day { color: var(--bg); opacity: 0.6; }
+  .day-chip-letter {
+    font-family: 'Archivo', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .day-chip-rest-label {
+    font-family: 'Archivo', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  /* Carte séance */
+  .session-card {
+    margin: 0 20px 16px;
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .session-hero {
+    padding: 20px;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 60%),
+      var(--bg-2);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .session-hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .session-hero-title {
+    font-family: 'Archivo', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .session-hero-focus {
+    font-family: 'Archivo', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-2);
+    letter-spacing: 0.02em;
+  }
+  .session-hero-stats {
+    display: flex;
+    gap: 20px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .session-stat .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-3);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .session-stat .val {
+    font-family: 'Archivo', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .exercise-list {
+    padding: 8px 0;
+  }
+  .exercise {
+    padding: 14px 20px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .exercise:first-child { border-top: none; }
+  .exercise.done {
+    opacity: 0.55;
+  }
+  .exercise.done .exercise-name { text-decoration: line-through; }
+
+  .exercise-check {
+    flex-shrink: 0;
+    width: 24px; height: 24px;
+    border: 1.5px solid var(--line-2);
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .exercise.done .exercise-check {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+  .exercise-check svg {
+    width: 12px; height: 12px;
+    color: var(--bg);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .exercise.done .exercise-check svg { opacity: 1; }
+
+  .exercise-body { flex: 1; min-width: 0; }
+  .exercise-idx {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-4);
+    letter-spacing: 0.15em;
+    margin-bottom: 3px;
+  }
+  .exercise-name {
+    font-family: 'Archivo', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .exercise-name .equipment {
+    font-weight: 400;
+    color: var(--ink-3);
+    font-size: 12px;
+  }
+  .exercise-sets {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+    background: var(--bg-2);
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--line);
+    margin-bottom: 6px;
+  }
+  .exercise-note {
+    font-family: 'Archivo', sans-serif;
+    font-size: 11px;
+    color: var(--ink-3);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  .rest-state {
+    text-align: center;
+    padding: 60px 30px;
+  }
+  .rest-icon {
+    font-size: 56px;
+    margin-bottom: 16px;
+    filter: grayscale(1) opacity(0.5);
+  }
+  .rest-title {
+    font-family: 'Archivo', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .rest-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
+  /* Progress bar séance */
+  .session-progress {
+    padding: 14px 20px;
+    border-top: 1px solid var(--line);
+    background: var(--bg-2);
+  }
+  .session-progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+  .session-progress-label .count { color: var(--ink); font-weight: 600; }
+  .session-progress-bar {
+    height: 3px;
+    background: var(--bg-3);
+    border-radius: var(--r-pill);
+    overflow: hidden;
+  }
+  .session-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.4s ease;
+    border-radius: var(--r-pill);
+  }
 </style>
 </head>
 <body>
@@ -941,6 +1302,9 @@
     </symbol>
   </defs>
 </svg>
+
+<!-- ========== VUE CALORIES ========== -->
+<div id="screen-calories">
 
 <header class="header">
   <div class="brand">
@@ -1034,7 +1398,7 @@
 </div>
 
 <!-- ===== Bouton flottant ===== -->
-<div class="fab-group">
+<div class="fab-group" id="fab-group">
   <button class="fab" onclick="openSearch()">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
       <path d="M12 5v14M5 12h14"/>
@@ -1042,6 +1406,37 @@
     Ajouter
   </button>
 </div>
+
+</div><!-- /screen-calories -->
+
+<!-- ========== VUE SPORT ========== -->
+<div id="screen-sport" style="display:none">
+  <div class="sport-header">
+    <div class="row">
+      <div class="sport-title">Programme</div>
+      <div class="sport-week" id="sport-week-stamp">—</div>
+    </div>
+    <div class="sport-sub">Split 4 jours · Hypertrophie</div>
+  </div>
+
+  <div class="week-strip" id="week-strip"></div>
+
+  <div id="session-container"></div>
+</div>
+
+<!-- ========== BARRE DE NAVIGATION ========== -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="nav-item active" data-screen="calories" onclick="switchScreen('calories')">
+      <span class="nav-emoji">⚖️</span>
+      <span class="nav-label">Calories</span>
+    </button>
+    <button class="nav-item" data-screen="sport" onclick="switchScreen('sport')">
+      <span class="nav-emoji">🏋️</span>
+      <span class="nav-label">Sport</span>
+    </button>
+  </div>
+</nav>
 
 <!-- ===== Modal recherche ===== -->
 <div class="modal-backdrop" id="search-modal">
@@ -1939,6 +2334,235 @@ document.querySelectorAll('.modal-backdrop').forEach(m => {
     }
   });
 });
+
+// ============================================
+// ============ PROGRAMME SPORT ===============
+// ============================================
+
+const SPORT_PROGRAM = {
+  1: { // Lundi
+    code: 'A',
+    title: 'Le Buste',
+    focus: 'Pecs & Épaules',
+    exercises: [
+      { name: 'Développé Couché Incliné', equipment: 'Haltères', sets: '4 × 8-12', note: 'Focus haut de pec' },
+      { name: 'Développé Militaire Debout', equipment: 'Barre', sets: '3 × 8-10', note: 'Force globale épaules' },
+      { name: 'Élévations Latérales', equipment: 'Haltères', sets: '4 × 15-20', note: 'Largeur d\'épaules' },
+      { name: 'Extensions des Triceps', equipment: 'Haltère', sets: '3 × échec', note: 'Triceps & bas des pecs' },
+      { name: 'Dips', equipment: 'Poids du corps', sets: '3 × échec', note: 'Triceps & bas des pecs' }
+    ]
+  },
+  2: { // Mardi
+    code: 'B',
+    title: 'La Carrure',
+    focus: 'Dos & Trapèzes',
+    exercises: [
+      { name: 'Soulevé de Terre', equipment: 'Barre', sets: '3 × 6-8', note: 'Épaisseur du dos et trapèzes' },
+      { name: 'Rowing Barre (Buste penché)', equipment: 'Barre', sets: '4 × 10-12', note: 'Dos large et épais' },
+      { name: 'Shrugs (Haussements d\'épaules)', equipment: 'Barre', sets: '4 × 12-15', note: 'Trapèzes supérieurs' },
+      { name: 'Oiseau / Reverse Fly', equipment: 'Haltères', sets: '4 × 15', note: 'Arrière d\'épaule · Posture' },
+      { name: 'Curl Barre', equipment: 'Barre', sets: '3 × 10-12', note: 'Biceps' }
+    ]
+  },
+  3: null, // Mercredi — repos
+  4: { // Jeudi
+    code: 'C',
+    title: 'L\'Esthétique',
+    focus: 'Épaules, Cou & Bras',
+    exercises: [
+      { name: 'Développé Arnold', equipment: 'Haltères', sets: '3 × 10-12', note: 'Épaules 3D' },
+      { name: 'Élévation Latérale', equipment: 'Haltères', sets: '4 × 15-20', note: 'Rappel largeur' },
+      { name: 'Neck Curls', equipment: 'Disque', sets: '3 × 20', note: 'Allongé sur un banc, disque sur le front' },
+      { name: 'Curl Marteau', equipment: 'Haltères', sets: '3 × 10-12', note: 'Épaisseur bras / avant-bras' },
+      { name: 'Barre au Front', equipment: 'Barre', sets: '3 × 10-12', note: 'Triceps' },
+      { name: 'Extensions du Cou', equipment: 'Disque', sets: '3 × 20', note: 'Allongé sur le ventre, disque derrière la tête' }
+    ]
+  },
+  5: { // Vendredi
+    code: 'D',
+    title: 'Puissance & Rappel',
+    focus: 'Jambes & Volume',
+    exercises: [
+      { name: 'Squat', equipment: 'Barre', sets: '4 × 8-10', note: 'Stimule les hormones de croissance naturelles' },
+      { name: 'Fentes', equipment: 'Haltères', sets: '3 × 12 / jambe', note: '' },
+      { name: 'Élévations Latérales', equipment: 'Haltères', sets: '3 × 15', note: 'Encore ! C\'est le muscle qui change le physique' },
+      { name: 'Écartés Haltères', equipment: 'Haltères', sets: '3 × 12-15', note: 'Haut de pec · au sol ou sur banc' },
+      { name: 'Élévations Mollets', equipment: 'Barre ou Haltères', sets: '3 × 15-20', note: 'Debout' }
+    ]
+  },
+  6: null, // Samedi — repos
+  0: null  // Dimanche — repos
+};
+
+const DAY_LABELS = ['DIM', 'LUN', 'MAR', 'MER', 'JEU', 'VEN', 'SAM'];
+const SPORT_CHECK_KEY = 'nocta_sport_checks_v1';
+
+function getSportChecks() {
+  try { return JSON.parse(localStorage.getItem(SPORT_CHECK_KEY)) || {}; }
+  catch { return {}; }
+}
+function saveSportChecks(obj) {
+  localStorage.setItem(SPORT_CHECK_KEY, JSON.stringify(obj));
+}
+
+function getWeekInfo(date) {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  const monday = new Date(d.setDate(diff));
+  const year = monday.getFullYear();
+  const firstJan = new Date(year, 0, 1);
+  const weekNum = Math.ceil((((monday - firstJan) / 86400000) + firstJan.getDay() + 1) / 7);
+  return { year, weekNum, monday };
+}
+
+function sportDayKey(date, dayIdx) {
+  const { year, weekNum } = getWeekInfo(date);
+  return `${year}-W${String(weekNum).padStart(2, '0')}-${dayIdx}`;
+}
+
+let selectedSportDay = new Date().getDay();
+
+function renderSportView() {
+  const today = new Date();
+  const info = getWeekInfo(today);
+  document.getElementById('sport-week-stamp').textContent = `S${info.weekNum} · ${info.year}`;
+
+  const strip = document.getElementById('week-strip');
+  const orderedDays = [1, 2, 3, 4, 5, 6, 0];
+  strip.innerHTML = orderedDays.map(dayIdx => {
+    const session = SPORT_PROGRAM[dayIdx];
+    const isToday = today.getDay() === dayIdx;
+    const isActive = selectedSportDay === dayIdx;
+    const isRest = !session;
+    return `
+      <div class="day-chip ${isActive ? 'active' : ''} ${isToday ? 'today' : ''} ${isRest ? 'rest' : ''}"
+           onclick="selectSportDay(${dayIdx})">
+        <div class="day-chip-day">${DAY_LABELS[dayIdx]}</div>
+        <div class="${isRest ? 'day-chip-rest-label' : 'day-chip-letter'}">
+          ${isRest ? 'REST' : session.code}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  renderSession();
+}
+
+function selectSportDay(dayIdx) {
+  selectedSportDay = dayIdx;
+  renderSportView();
+}
+
+function renderSession() {
+  const container = document.getElementById('session-container');
+  const session = SPORT_PROGRAM[selectedSportDay];
+
+  if (!session) {
+    container.innerHTML = `
+      <div class="rest-state">
+        <div class="rest-icon">🌙</div>
+        <div class="rest-title">Jour de repos</div>
+        <div class="rest-sub">Récupération active</div>
+      </div>
+    `;
+    return;
+  }
+
+  const checks = getSportChecks();
+  const today = new Date();
+  const dayKey = sportDayKey(today, selectedSportDay);
+  const doneList = checks[dayKey] || [];
+  const doneCount = doneList.length;
+  const total = session.exercises.length;
+  const pct = total ? Math.round((doneCount / total) * 100) : 0;
+
+  const totalSets = session.exercises.reduce((s, e) => {
+    const m = e.sets.match(/(\d+)/);
+    return s + (m ? parseInt(m[1]) : 0);
+  }, 0);
+
+  container.innerHTML = `
+    <div class="session-card">
+      <div class="session-hero">
+        <div class="session-hero-tag">Séance ${session.code} · ${DAY_LABELS[selectedSportDay]}</div>
+        <div class="session-hero-title">${escapeHtml(session.title)}</div>
+        <div class="session-hero-focus">${escapeHtml(session.focus)}</div>
+        <div class="session-hero-stats">
+          <div class="session-stat">
+            <div class="label">Exercices</div>
+            <div class="val">${total}</div>
+          </div>
+          <div class="session-stat">
+            <div class="label">Séries tot.</div>
+            <div class="val">${totalSets}</div>
+          </div>
+          <div class="session-stat">
+            <div class="label">Terminés</div>
+            <div class="val">${doneCount}/${total}</div>
+          </div>
+        </div>
+      </div>
+      <div class="exercise-list">
+        ${session.exercises.map((ex, i) => `
+          <div class="exercise ${doneList.includes(i) ? 'done' : ''}" onclick="toggleExercise(${i})">
+            <div class="exercise-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M5 12l5 5L20 7"/>
+              </svg>
+            </div>
+            <div class="exercise-body">
+              <div class="exercise-idx">EX. ${String(i + 1).padStart(2, '0')}</div>
+              <div class="exercise-name">
+                ${escapeHtml(ex.name)}
+                ${ex.equipment ? `<span class="equipment"> · ${escapeHtml(ex.equipment)}</span>` : ''}
+              </div>
+              <div class="exercise-sets">${escapeHtml(ex.sets)} reps</div>
+              ${ex.note ? `<div class="exercise-note">${escapeHtml(ex.note)}</div>` : ''}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="session-progress">
+        <div class="session-progress-label">
+          <span>Progression</span>
+          <span class="count">${pct}%</span>
+        </div>
+        <div class="session-progress-bar">
+          <div class="session-progress-fill" style="width:${pct}%"></div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function toggleExercise(idx) {
+  const checks = getSportChecks();
+  const today = new Date();
+  const dayKey = sportDayKey(today, selectedSportDay);
+  if (!checks[dayKey]) checks[dayKey] = [];
+  const pos = checks[dayKey].indexOf(idx);
+  if (pos === -1) {
+    checks[dayKey].push(idx);
+  } else {
+    checks[dayKey].splice(pos, 1);
+  }
+  saveSportChecks(checks);
+  renderSession();
+}
+
+function switchScreen(screen) {
+  document.getElementById('screen-calories').style.display = screen === 'calories' ? 'block' : 'none';
+  document.getElementById('screen-sport').style.display = screen === 'sport' ? 'block' : 'none';
+  document.getElementById('fab-group').style.display = screen === 'calories' ? 'flex' : 'none';
+  document.querySelectorAll('.nav-item').forEach(n => {
+    n.classList.toggle('active', n.dataset.screen === screen);
+  });
+  if (screen === 'sport') {
+    selectedSportDay = new Date().getDay();
+    renderSportView();
+  }
+}
 
 render();
 </script>
