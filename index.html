@@ -5,29 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Calories">
-<meta name="theme-color" content="#fafafa">
-<title>Mon Tracker</title>
+<meta name="apple-mobile-web-app-title" content="Kcal">
+<meta name="theme-color" content="#ffffff">
+<title>Kcal</title>
 
-<!-- Icône app (flamme orange, style fitness moderne) -->
-<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23FF9A3C'/><stop offset='1' stop-color='%23FF4D00'/></linearGradient></defs><rect width='180' height='180' rx='40' fill='url(%23g)'/><path d='M90 35c0 25-22 35-22 58 0 18 14 32 32 32s32-14 32-32c0-14-10-22-10-32 0 8-6 14-12 14 0-18-10-30-20-40z' fill='white'/></svg>">
+<!-- Icône app : pomme stylisée noire sur fond blanc -->
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%23ffffff'/><g transform='translate(90 95)'><path d='M-30 0 C-30 -28 -12 -40 0 -38 C12 -40 30 -28 30 0 C30 25 15 45 0 45 C-15 45 -30 25 -30 0 Z' fill='%230a0a0a'/><path d='M-2 -42 Q-2 -55 8 -60 Q14 -50 8 -42 Q2 -38 -2 -42 Z' fill='%230a0a0a'/></g></svg>">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fafafa;
+    --bg: #ffffff;
     --bg-card: #ffffff;
-    --bg-soft: #f4f4f5;
-    --ink: #0f0f0f;
+    --bg-soft: #f7f7f8;
+    --ink: #0a0a0a;
     --ink-2: #52525b;
-    --ink-3: #a1a1aa;
+    --ink-3: #9ca3af;
     --ink-4: #d4d4d8;
-    --line: #e4e4e7;
-    --line-soft: #f1f1f4;
-    --kcal: #FF6B35;
-    --kcal-soft: #FFF1EB;
+    --line: #ececee;
+    --line-soft: #f3f3f5;
+    --kcal: #0a0a0a;
+    --kcal-soft: #f3f3f5;
     --prot: #EF4444;
     --prot-soft: #FEF2F2;
     --carb: #F59E0B;
@@ -35,11 +35,13 @@
     --fat: #3B82F6;
     --fat-soft: #EFF6FF;
     --success: #10B981;
+    --streak: #FB923C;
     --r-sm: 12px;
     --r-md: 16px;
     --r-lg: 20px;
     --r-xl: 28px;
     --r-pill: 100px;
+    --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body {
@@ -60,132 +62,157 @@
 
   /* ===== Header ===== */
   .header {
-    padding: 20px 20px 8px;
+    padding: 16px 20px 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .greeting {
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-logo {
+    width: 22px;
+    height: 22px;
+  }
+  .brand-name {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .streak {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--bg-soft);
+    padding: 6px 12px;
+    border-radius: var(--r-pill);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .streak-emoji { font-size: 14px; }
+
+  /* ===== Barre de jours de la semaine ===== */
+  .week-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    padding: 0 20px 16px;
+  }
+  .week-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 0;
+    cursor: pointer;
+  }
+  .week-day-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-3);
+    text-transform: capitalize;
+  }
+  .week-day-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink-2);
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .week-day.logged .week-day-circle {
+    border-color: var(--success);
+  }
+  .week-day.over .week-day-circle {
+    border-color: var(--prot);
+  }
+  .week-day.today .week-day-circle {
+    border-color: var(--streak);
+    background: var(--streak);
+    color: white;
+  }
+  .week-day.today .week-day-label {
+    color: var(--streak);
+    font-weight: 800;
+  }
+  .week-day.future {
+    opacity: 0.35;
+  }
+
+  /* ===== Card calories principale ===== */
+  .cal-ring-card {
+    margin: 0 20px 14px;
+    background: var(--bg-card);
+    border-radius: var(--r-xl);
+    padding: 22px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--line-soft);
+  }
+  .cal-main { flex: 1; min-width: 0; }
+  .cal-number-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+  .cal-number {
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .cal-target {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink-3);
+    letter-spacing: -0.02em;
+  }
+  .cal-label {
     font-size: 13px;
     color: var(--ink-3);
     font-weight: 500;
   }
-  .greeting-date {
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin-top: 2px;
-  }
-  .header-btn {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    background: var(--bg-card);
-    border: 1px solid var(--line);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--ink-2);
-  }
-  .header-btn svg { width: 18px; height: 18px; }
 
-  /* ===== Anneau calorique principal ===== */
-  .cal-ring-card {
-    margin: 16px 20px;
-    background: var(--bg-card);
-    border-radius: var(--r-xl);
-    padding: 28px 20px;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-    border: 1px solid var(--line-soft);
-  }
   .ring-wrap {
     position: relative;
-    width: 130px;
-    height: 130px;
+    width: 64px;
+    height: 64px;
     flex-shrink: 0;
   }
   .ring-wrap svg { transform: rotate(-90deg); }
-  .ring-bg { fill: none; stroke: var(--bg-soft); stroke-width: 10; }
+  .ring-bg { fill: none; stroke: var(--bg-soft); stroke-width: 7; }
   .ring-fill {
     fill: none;
-    stroke: var(--kcal);
-    stroke-width: 10;
+    stroke: var(--ink);
+    stroke-width: 7;
     stroke-linecap: round;
     transition: stroke-dashoffset 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
-  .ring-center {
+  .ring-flame-center {
     position: absolute;
     inset: 0;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
-  .ring-value {
-    font-size: 32px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1;
-  }
-  .ring-label {
-    font-size: 11px;
-    color: var(--ink-3);
-    font-weight: 500;
-    margin-top: 4px;
-  }
-  .ring-flame {
-    position: absolute;
-    top: -4px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--kcal);
-    color: white;
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    box-shadow: 0 4px 12px rgba(255,107,53,0.35);
+    font-size: 22px;
   }
 
-  .cal-details {
-    flex: 1;
-    min-width: 0;
-  }
-  .cal-goal-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 6px;
-  }
-  .cal-goal-label { font-size: 12px; color: var(--ink-3); font-weight: 500; }
-  .cal-goal-val { font-size: 14px; font-weight: 700; }
-  .cal-big {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 8px;
-  }
-  .cal-remaining {
-    display: inline-block;
-    padding: 6px 12px;
-    background: var(--kcal-soft);
-    color: var(--kcal);
-    border-radius: var(--r-pill);
-    font-size: 12px;
-    font-weight: 700;
-  }
-  .cal-remaining.over {
-    background: #FEE2E2;
-    color: #DC2626;
-  }
-
-  /* ===== Cards macro ===== */
+  /* ===== Cards macro avec mini anneaux ===== */
   .macros-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -196,50 +223,59 @@
   .macro-card {
     background: var(--bg-card);
     border-radius: var(--r-lg);
-    padding: 14px;
+    padding: 16px 14px;
     border: 1px solid var(--line-soft);
-    position: relative;
-    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
-  .macro-icon {
-    width: 28px; height: 28px;
-    border-radius: 8px;
+  .macro-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  .macro-val-big {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .macro-val-big .g {
+    font-size: 12px;
+    color: var(--ink-3);
+    font-weight: 500;
+    margin-left: 2px;
+  }
+  .mini-ring {
+    position: relative;
+    width: 28px;
+    height: 28px;
+  }
+  .mini-ring svg { transform: rotate(-90deg); }
+  .mini-ring-bg { fill: none; stroke-width: 4; }
+  .mini-ring-fill { fill: none; stroke-width: 4; stroke-linecap: round; transition: stroke-dashoffset 0.6s ease; }
+  .mini-ring.prot .mini-ring-bg { stroke: var(--prot-soft); }
+  .mini-ring.prot .mini-ring-fill { stroke: var(--prot); }
+  .mini-ring.carb .mini-ring-bg { stroke: var(--carb-soft); }
+  .mini-ring.carb .mini-ring-fill { stroke: var(--carb); }
+  .mini-ring.fat .mini-ring-bg { stroke: var(--fat-soft); }
+  .mini-ring.fat .mini-ring-fill { stroke: var(--fat); }
+  .mini-ring-emoji {
+    position: absolute;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    margin-bottom: 8px;
+    font-size: 11px;
   }
-  .macro-icon.prot { background: var(--prot-soft); color: var(--prot); }
-  .macro-icon.carb { background: var(--carb-soft); color: var(--carb); }
-  .macro-icon.fat { background: var(--fat-soft); color: var(--fat); }
-  .macro-label {
+  .macro-label-new {
     font-size: 11px;
     color: var(--ink-3);
     font-weight: 600;
-    margin-bottom: 2px;
   }
-  .macro-val {
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-  }
-  .macro-val .g { font-size: 11px; color: var(--ink-3); font-weight: 500; margin-left: 2px; }
-  .macro-progress {
-    margin-top: 8px;
-    height: 4px;
-    background: var(--bg-soft);
-    border-radius: var(--r-pill);
-    overflow: hidden;
-  }
-  .macro-progress-fill {
-    height: 100%;
-    border-radius: var(--r-pill);
-    transition: width 0.6s ease;
-  }
-  .macro-progress-fill.prot { background: var(--prot); }
-  .macro-progress-fill.carb { background: var(--carb); }
-  .macro-progress-fill.fat { background: var(--fat); }
 
   /* ===== Section title ===== */
   .section-title {
@@ -1350,59 +1386,78 @@
 <div class="screen active" id="screen-calories">
 
 <header class="header">
-  <div>
-    <div class="greeting">Salut 👋</div>
-    <div class="greeting-date" id="header-date">Aujourd'hui</div>
-  </div>
-  <button class="header-btn" onclick="editGoals()" title="Objectifs">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="12" r="3"/>
-      <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+  <div class="brand">
+    <svg class="brand-logo" viewBox="0 0 100 100">
+      <path d="M 20 50 C 20 22 40 10 52 12 C 64 10 80 22 80 50 C 80 75 65 95 50 95 C 35 95 20 75 20 50 Z" fill="#0a0a0a"/>
+      <path d="M 50 8 Q 50 -5 60 -10 Q 66 0 60 8 Q 54 12 50 8 Z" fill="#0a0a0a" transform="translate(0 12)"/>
     </svg>
+    <div class="brand-name">Kcal</div>
+  </div>
+  <button class="streak" onclick="editGoals()" title="Objectifs">
+    <span class="streak-emoji">🔥</span>
+    <span id="streak-count">0</span>
   </button>
 </header>
 
+<!-- Barre des jours de la semaine -->
+<div class="week-days" id="week-days"></div>
+
 <section class="cal-ring-card">
-  <div class="ring-wrap">
-    <div class="ring-flame">🔥</div>
-    <svg width="130" height="130" viewBox="0 0 130 130">
-      <circle class="ring-bg" cx="65" cy="65" r="55"/>
-      <circle class="ring-fill" cx="65" cy="65" r="55"
-              stroke-dasharray="345.6" stroke-dashoffset="345.6" id="ring-fill"/>
-    </svg>
-    <div class="ring-center">
-      <div class="ring-value" id="kcal-current">0</div>
-      <div class="ring-label">kcal</div>
+  <div class="cal-main">
+    <div class="cal-number-row">
+      <div class="cal-number" id="kcal-current">0</div>
+      <div class="cal-target">/<span id="kcal-goal-display">3000</span></div>
     </div>
+    <div class="cal-label">Calories mangées</div>
   </div>
-  <div class="cal-details">
-    <div class="cal-goal-row">
-      <span class="cal-goal-label">Objectif</span>
-      <span class="cal-goal-val" id="kcal-goal-display">3000 kcal</span>
-    </div>
-    <div class="cal-big" id="kcal-progress">0 / 3000</div>
-    <div class="cal-remaining" id="kcal-remaining">3000 kcal restantes</div>
+  <div class="ring-wrap">
+    <svg width="64" height="64" viewBox="0 0 64 64">
+      <circle class="ring-bg" cx="32" cy="32" r="26"/>
+      <circle class="ring-fill" cx="32" cy="32" r="26" stroke-dasharray="163.4" stroke-dashoffset="163.4" id="ring-fill"/>
+    </svg>
+    <div class="ring-flame-center">🔥</div>
   </div>
 </section>
 
 <div class="macros-row">
   <div class="macro-card">
-    <div class="macro-icon prot">💪</div>
-    <div class="macro-label">Protéines</div>
-    <div class="macro-val"><span id="p-val">0</span><span class="g">/ <span id="p-goal">150</span>g</span></div>
-    <div class="macro-progress"><div class="macro-progress-fill prot" id="p-bar" style="width:0%"></div></div>
+    <div class="macro-top">
+      <div class="macro-val-big"><span id="p-val">0</span><span class="g">/<span id="p-goal">150</span>g</span></div>
+      <div class="mini-ring prot">
+        <svg width="28" height="28" viewBox="0 0 28 28">
+          <circle class="mini-ring-bg" cx="14" cy="14" r="11"/>
+          <circle class="mini-ring-fill" cx="14" cy="14" r="11" stroke-dasharray="69.1" stroke-dashoffset="69.1" id="p-ring"/>
+        </svg>
+        <div class="mini-ring-emoji">💪</div>
+      </div>
+    </div>
+    <div class="macro-label-new">Protéines</div>
   </div>
   <div class="macro-card">
-    <div class="macro-icon carb">🌾</div>
-    <div class="macro-label">Glucides</div>
-    <div class="macro-val"><span id="c-val">0</span><span class="g">/ <span id="c-goal">375</span>g</span></div>
-    <div class="macro-progress"><div class="macro-progress-fill carb" id="c-bar" style="width:0%"></div></div>
+    <div class="macro-top">
+      <div class="macro-val-big"><span id="c-val">0</span><span class="g">/<span id="c-goal">375</span>g</span></div>
+      <div class="mini-ring carb">
+        <svg width="28" height="28" viewBox="0 0 28 28">
+          <circle class="mini-ring-bg" cx="14" cy="14" r="11"/>
+          <circle class="mini-ring-fill" cx="14" cy="14" r="11" stroke-dasharray="69.1" stroke-dashoffset="69.1" id="c-ring"/>
+        </svg>
+        <div class="mini-ring-emoji">🌾</div>
+      </div>
+    </div>
+    <div class="macro-label-new">Glucides</div>
   </div>
   <div class="macro-card">
-    <div class="macro-icon fat">🥑</div>
-    <div class="macro-label">Lipides</div>
-    <div class="macro-val"><span id="f-val">0</span><span class="g">/ <span id="f-goal">100</span>g</span></div>
-    <div class="macro-progress"><div class="macro-progress-fill fat" id="f-bar" style="width:0%"></div></div>
+    <div class="macro-top">
+      <div class="macro-val-big"><span id="f-val">0</span><span class="g">/<span id="f-goal">100</span>g</span></div>
+      <div class="mini-ring fat">
+        <svg width="28" height="28" viewBox="0 0 28 28">
+          <circle class="mini-ring-bg" cx="14" cy="14" r="11"/>
+          <circle class="mini-ring-fill" cx="14" cy="14" r="11" stroke-dasharray="69.1" stroke-dashoffset="69.1" id="f-ring"/>
+        </svg>
+        <div class="mini-ring-emoji">🥑</div>
+      </div>
+    </div>
+    <div class="macro-label-new">Lipides</div>
   </div>
 </div>
 
@@ -2155,37 +2210,29 @@ function toast(msg) {
 
 // ============ RENDU CALORIES ============
 function render() {
-  const d = new Date();
-  document.getElementById('header-date').textContent =
-    d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+  renderWeekDays();
 
   const day = todayEntries();
   const t = computeTotals(day);
 
-  // Anneau
+  // Anneau principal
   const pct = Math.min(t.kcal / goals.kcal, 1);
-  const circ = 2 * Math.PI * 55;
+  const circ = 2 * Math.PI * 26;
   document.getElementById('ring-fill').setAttribute('stroke-dashoffset', circ * (1 - pct));
   document.getElementById('kcal-current').textContent = Math.round(t.kcal);
-  document.getElementById('kcal-goal-display').textContent = goals.kcal + ' kcal';
-  document.getElementById('kcal-progress').textContent = `${Math.round(t.kcal)} / ${goals.kcal}`;
-  const remaining = goals.kcal - Math.round(t.kcal);
-  const rEl = document.getElementById('kcal-remaining');
-  if (remaining >= 0) {
-    rEl.textContent = `${remaining} kcal restantes`;
-    rEl.classList.remove('over');
-  } else {
-    rEl.textContent = `+${Math.abs(remaining)} kcal en excès`;
-    rEl.classList.add('over');
-  }
+  document.getElementById('kcal-goal-display').textContent = goals.kcal;
 
-  // Macros
+  // Mini anneaux macros
+  const miniCirc = 2 * Math.PI * 11;
   [['p', 'prot'], ['c', 'carb'], ['f', 'fat']].forEach(([s, k]) => {
     document.getElementById(`${s}-val`).textContent = Math.round(t[k]);
     document.getElementById(`${s}-goal`).textContent = goals[k];
-    const p = Math.min((t[k] / goals[k]) * 100, 100);
-    document.getElementById(`${s}-bar`).style.width = p + '%';
+    const p = Math.min(t[k] / goals[k], 1);
+    document.getElementById(`${s}-ring`).setAttribute('stroke-dashoffset', miniCirc * (1 - p));
   });
+
+  // Streak (nombre de jours consécutifs avec au moins 1 aliment logué)
+  document.getElementById('streak-count').textContent = computeStreak();
 
   // Repas
   const cont = document.getElementById('meals-container');
@@ -2240,6 +2287,57 @@ function render() {
   }
 
   renderHistory();
+}
+
+// Barre de jours de la semaine (lundi → dimanche, semaine en cours)
+function renderWeekDays() {
+  const today = new Date();
+  const currentDay = today.getDay();
+  const mondayOffset = currentDay === 0 ? -6 : 1 - currentDay;
+  const monday = new Date(today);
+  monday.setDate(today.getDate() + mondayOffset);
+
+  const shortLabels = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+  const html = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const totals = computeTotals(state[k]);
+    const isToday = d.toDateString() === today.toDateString();
+    const isFuture = d > today && !isToday;
+    const logged = totals.kcal > 0;
+    const over = totals.kcal > goals.kcal;
+
+    let cls = 'week-day';
+    if (isToday) cls += ' today';
+    else if (isFuture) cls += ' future';
+    else if (over) cls += ' over';
+    else if (logged) cls += ' logged';
+
+    html.push(`
+      <div class="${cls}">
+        <div class="week-day-label">${shortLabels[i]}</div>
+        <div class="week-day-circle">${d.getDate()}</div>
+      </div>
+    `);
+  }
+  document.getElementById('week-days').innerHTML = html.join('');
+}
+
+// Calcul du streak : jours consécutifs avec au moins 1 aliment
+function computeStreak() {
+  let streak = 0;
+  const today = new Date();
+  for (let i = 0; i < 365; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const t = computeTotals(state[k]);
+    if (t.kcal > 0) streak++;
+    else if (i > 0) break; // Tolère qu'aujourd'hui soit vide
+  }
+  return streak;
 }
 
 function renderHistory() {
